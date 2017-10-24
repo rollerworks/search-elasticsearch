@@ -1,0 +1,113 @@
+---------------------------------------------------------------------------
+
+by dkarlovi at 2017-10-17T15:15:53Z
+
+@sstok is this something you had in mind?
+
+---------------------------------------------------------------------------
+
+by sstok at 2017-10-18T11:22:43Z
+
+Thank you so much for your work so far 👍
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2017-10-18T11:47:35Z
+
+@sstok can you elaborate a bit on the `registerField()`? How is that supposed to work exactly?
+
+ie. how do I map from fieldset `customer-name` to index `invoices`, type `invoices`, property `customer.full_name`?
+
+---------------------------------------------------------------------------
+
+by sstok at 2017-10-18T13:24:59Z
+
+The `registerField` method works similar to the Doctrine DBAL/ORM implementation 😃
+You should be able to map a search field to one or more fields, but ElasticSearch actually is much more advanced in this topic as (IIRC) you can create an index with combining fields.
+
+It's a while since I worked on the ElasticSearch implementation 😅
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2017-10-18T13:36:25Z
+
+@sstok sure, we can work on advanced mappings later, for now let's try and get **anything** working. :)
+
+For example, how did you imagine we map `id: 1` to `/invoices/invoices`, property `_id` with the `registerField()`?
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2017-10-19T09:22:51Z
+
+@sstok I've added some changes to the query generator itself:
+
+1. `getQuery` now wraps in `query` so you can use it as is (refactored your tests to match)
+2. implemented a `registerField` in some manner and refactored the hardcoded mappings in query generator and (your tests)
+
+Can you take a look and point out any glaring errors or do you feel this might be a way to go?
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2017-10-19T15:12:41Z
+
+@sstok
+
+I've taken the McDonald's principle and have made [a property notation format proposition](https://github.com/rollerworks/search-elasticsearch/pull/1/files#diff-4a56eb64cd11341f5e66b764d17cadc9R36). If you have any feedback on this or anything else in this PR, I'd really love to hear it. Also need a review regarding normalizers (specifically date, but others too).
+
+I think this has quite some potential, need to work out the details.
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2017-10-23T09:52:33Z
+
+Added a query conversion concept (which should handle special cases for IDs, dates, etc).
+
+Also, you've inverted less than / greater than in your code and tests, I had a WTF moment there for a bit. :sob: Check the latest changes and feedback if you get the chance.
+
+BTW how do I explain to the system that any date-y field should be converted by my DateConverter? Currently, BirthdayType is broken as it's not handled.
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2017-10-23T15:05:40Z
+
+I've added support for nested queries (for example, binding property `items[].label` will do a nested query on `items` and do a regular query on `items.label`), will finish compare and matchers tomorrow.
+
+What can we do to get this merged and released tomorrow? I'd like to include a preview version of this in my app ASAP (that's the reason I've done this work in the first place). If you could help me out here, it would be great. For example, start by submitting the package to Packagist so I can add my fork to my app.
+
+Thanks.
+
+---------------------------------------------------------------------------
+
+by sstok at 2017-10-24T07:50:55Z
+
+Amazing work! This looks good enough to move forwards.
+
+About the Client part, I didn't want to force a specific client implementation to use the user.
+For Elastica we can pass the generated query to https://github.com/ruflin/Elastica/blob/master/lib/Elastica/Query.php 👍
+
+For the API-Platform we need a full integration (using Elastica) to also make the mapping of Resources to Indexes/Documents work. But I'm not sure what the best approach is for this.
+For limiting access we need to have some Context Listener that will (based on a custom implementation) ensures the the ElasticSearch query limits the results to what's accessible by the user.
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2017-10-24T07:57:33Z
+
+> Amazing work! This looks good enough to move forwards.
+
+\o/ Could you submit the package to Packagist, it would allow us to move forward on this.
+
+> For the API-Platform we need a full integration (using Elastica) to also make the mapping of Resources to Indexes/Documents work. But I'm not sure what the best approach is for this.
+
+Maybe require FOS Elastica Bundle and compiler-pass the mapping into it?
+
+---------------------------------------------------------------------------
+
+by sstok at 2017-10-24T09:05:09Z
+
+I'm going to merge this one so we can move forward 👍
+
+---------------------------------------------------------------------------
+
+by sstok at 2017-10-24T09:06:10Z
+
+Thank you @dkarlovi
