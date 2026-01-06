@@ -26,9 +26,9 @@
         "ruflin/elastica": "^5.0 || ^6.0"
     },
     "require-dev": {
-        "moneyphp/money": "^3.0",
-        "symfony/phpunit-bridge": "^6.4 || ^7.0",
-        "symfony/var-dumper": "^6.4 || ^7.0"
+        "moneyphp/money": "^3.0 || ^4.0",
+        "symfony/phpunit-bridge": "^6.4 || ^7.0 || ^8.0",
+        "symfony/var-dumper": "^6.4 || ^7.0 || ^8.0"
     },
     "autoload": {
         "psr-4": {
