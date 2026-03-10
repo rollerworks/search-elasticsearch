@@ -17,7 +17,7 @@ use Rollerworks\Component\Search\Field\FieldConfig;
 use Rollerworks\Component\Search\Field\OrderField;
 
 /** @internal */
-final class FieldMapping implements \Serializable
+final class FieldMapping
 {
     public $fieldName;
     public $indexName;
@@ -182,25 +182,7 @@ final class FieldMapping implements \Serializable
         ];
     }
 
-    public function serialize(): ?string
-    {
-        return serialize(
-            [
-                'field_name' => $this->fieldName,
-                'index_name' => $this->indexName,
-                'type_name' => $this->typeName,
-                'property_name' => $this->propertyName,
-                'nested' => $this->nested,
-            ]
-        );
-    }
-
     public function __unserialize($serialized): void
-    {
-        // no-op
-    }
-
-    public function unserialize($serialized): void
     {
         // no-op
     }

@@ -585,7 +585,7 @@ use Rollerworks\Component\Search\Value\ValuesGroup;
     private function injectConditions(array $query, array $conditions): array
     {
         if ($conditions === []) {
-            return $query ?? [];
+            return $query;
         }
 
         $childType = null;

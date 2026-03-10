@@ -39,7 +39,6 @@ final class ElasticsearchFactoryTest extends ElasticsearchTestCase
         $searchCondition = new SearchCondition(new GenericFieldSet([], 'invoice'), new ValuesGroup());
         $conditionGenerator = $this->factory->createConditionGenerator($searchCondition);
 
-        /** @noinspection PhpInternalEntityUsedInspection */
         self::assertSame($searchCondition, $conditionGenerator->getSearchCondition());
     }
 
