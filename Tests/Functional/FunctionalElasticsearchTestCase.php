@@ -316,7 +316,7 @@ abstract class FunctionalElasticsearchTestCase extends ElasticsearchTestCase
         }
 
         self::assertSame(
-            array_map('strval', $expectedIds),
+            array_map(strval(...), $expectedIds),
             $foundIds,
             \sprintf(
                 "Found these records instead: \n%s\n"

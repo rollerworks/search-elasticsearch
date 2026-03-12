@@ -98,10 +98,10 @@ final class FieldMapping
         $nested = false;
         $join = false;
 
-        if (mb_strpos($property, '#') !== false) {
+        if (str_contains($property, '#')) {
             [$path, $propertyName] = explode('#', $property);
 
-            $path = trim($path, '/');
+            $path = mb_trim($path, '/');
             $indexName = $path;
 
             if (mb_strpos($path, '/') !== false) {
@@ -109,27 +109,27 @@ final class FieldMapping
             }
         }
 
-        if (mb_strpos($property, '>') !== false) {
+        if (str_contains($property, '>')) {
             $tokens = explode('>', $propertyName);
 
             // last token is the property name
-            $propertyName = trim(array_pop($tokens), '.');
+            $propertyName = mb_trim(array_pop($tokens), '.');
 
             foreach ($tokens as $type) {
-                $type = trim($type, '.');
+                $type = mb_trim($type, '.');
                 $join = compact('type', 'join');
             }
         }
 
-        if (mb_strpos($propertyName, '[]') !== false) {
+        if (str_contains($propertyName, '[]')) {
             $tokens = explode('[]', $propertyName);
 
             // last token is the property name
-            $propertyName = trim(array_pop($tokens), '.');
-            $propertyName = trim(end($tokens), '.') . '.' . $propertyName;
+            $propertyName = mb_trim(array_pop($tokens), '.');
+            $propertyName = mb_trim(end($tokens), '.') . '.' . $propertyName;
 
             foreach ($tokens as $path) {
-                $path = trim($path, '.');
+                $path = mb_trim($path, '.');
                 $nested = compact('path', 'nested');
             }
         }

@@ -143,16 +143,21 @@ use Rollerworks\Component\Search\Value\ValuesGroup;
 
         $this->getGroupMappings($group, $mappings);
 
-        if (null !== $primaryCondition = $this->searchCondition->getPrimaryCondition()) {
+        $primaryCondition = $this->searchCondition->getPrimaryCondition();
+
+        if ($primaryCondition !== null) {
             $this->getGroupMappings($primaryCondition->getValuesGroup(), $mappings);
         }
 
         if ($mappings === []) {
-            if (null !== $searchOrder = $this->searchCondition->getOrder()) {
+            $searchOrder = $this->searchCondition->getOrder();
+            $primarySearchOrder = $primaryCondition?->getOrder();
+
+            if ($searchOrder !== null) {
                 $this->getGroupMappings($searchOrder->getValuesGroup(), $mappings);
             }
 
-            if ($primaryCondition !== null && null !== $primarySearchOrder = $primaryCondition->getOrder()) {
+            if ($primarySearchOrder !== null) {
                 $this->getGroupMappings($primarySearchOrder->getValuesGroup(), $mappings);
             }
         }
@@ -577,7 +582,7 @@ use Rollerworks\Component\Search\Value\ValuesGroup;
         }
 
         if (\is_array($template)) {
-            return array_map([$this->parameterBag, 'injectParameters'], $template);
+            return array_map($this->parameterBag->injectParameters(...), $template);
         }
 
         return $this->parameterBag->injectParameters($template);
@@ -653,29 +658,27 @@ use Rollerworks\Component\Search\Value\ValuesGroup;
     {
         $conditions = [];
 
-        if ($mapping->conditions !== []) {
-            foreach ($mapping->conditions as $mappingCondition) {
-                if ($mappingCondition->propertyQuery) {
-                    $hints->context = QueryPreparationHints::CONTEXT_PRECONDITION_QUERY;
-                    $values = $mappingCondition->propertyQuery;
-                } else {
-                    $hints->context = QueryPreparationHints::CONTEXT_PRECONDITION_VALUE;
-                    $values = (array) $mappingCondition->propertyValue;
-                }
-
-                $conditions[] = $this->prepareProcessedValuesQuery(
-                    $mappingCondition->propertyName,
-                    $values,
-                    $hints,
-                    $mappingCondition->queryConversion,
-                    $mappingCondition->valueConversion,
-                    $mappingCondition->nested,
-                    $mappingCondition->join,
-                    $injectParams,
-                    [],
-                    $mappingCondition->options
-                );
+        foreach ($mapping->conditions as $mappingCondition) {
+            if ($mappingCondition->propertyQuery) {
+                $hints->context = QueryPreparationHints::CONTEXT_PRECONDITION_QUERY;
+                $values = $mappingCondition->propertyQuery;
+            } else {
+                $hints->context = QueryPreparationHints::CONTEXT_PRECONDITION_VALUE;
+                $values = (array) $mappingCondition->propertyValue;
             }
+
+            $conditions[] = $this->prepareProcessedValuesQuery(
+                $mappingCondition->propertyName,
+                $values,
+                $hints,
+                $mappingCondition->queryConversion,
+                $mappingCondition->valueConversion,
+                $mappingCondition->nested,
+                $mappingCondition->join,
+                $injectParams,
+                [],
+                $mappingCondition->options
+            );
         }
 
         return $conditions;

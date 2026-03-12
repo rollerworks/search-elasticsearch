@@ -30,8 +30,6 @@ final class ElasticsearchFactoryTest extends ElasticsearchTestCase
 {
     protected ElasticsearchFactory $factory;
 
-    /**
-     */
     /** @test */
     public function create_condition_generator(): void
     {
