@@ -25,11 +25,8 @@ class QueryPreparationHints
     public const CONTEXT_PATTERN_MATCH = 'PATTERN_MATCH';
     public const CONTEXT_ORDER = 'ORDER';
 
-    /** @var bool */
-    public $identifier = false;
+    public bool $identifier = false;
 
-    /**
-     * @var string Preparation context, one of ConversionHints::CONTEXT_* constants
-     */
-    public $context;
+    /** @var QueryPreparationHints::CONTEXT_* */
+    public string $context;
 }

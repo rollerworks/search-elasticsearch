@@ -21,14 +21,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateTimeTypeExtension extends AbstractFieldTypeExtension
 {
-    /**
-     * @var DateTimeConversion
-     */
-    private $conversion;
-
-    public function __construct(DateTimeConversion $conversion)
-    {
-        $this->conversion = $conversion;
+    public function __construct(
+        private readonly DateTimeConversion $conversion = new DateTimeConversion(
+        ),
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void

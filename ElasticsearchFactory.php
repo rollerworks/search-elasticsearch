@@ -19,20 +19,10 @@ use Rollerworks\Component\Search\SearchCondition;
 
 class ElasticsearchFactory
 {
-    /**
-     * @var Cache|null
-     */
-    private $cacheDriver;
-
-    /**
-     * @var ParameterBag|null
-     */
-    private $parameterBag;
-
-    public function __construct(?Cache $cacheDriver = null, ?ParameterBag $parameterBag = null)
-    {
-        $this->cacheDriver = $cacheDriver;
-        $this->parameterBag = $parameterBag;
+    public function __construct(
+        private readonly ?Cache $cacheDriver = null,
+        private readonly ?ParameterBag $parameterBag = null,
+    ) {
     }
 
     /**

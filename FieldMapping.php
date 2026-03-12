@@ -19,42 +19,35 @@ use Rollerworks\Component\Search\Field\OrderField;
 /** @internal */
 final class FieldMapping
 {
-    public $fieldName;
-    public $indexName;
-    public $typeName;
-    public $propertyName;
-    public $propertyValue;
-    public $propertyQuery;
-    public $nested = false;
-    public $join = false;
-    public $boost;
+    public ?string $indexName;
+    public ?string $typeName;
+    public ?string $propertyName;
+    public mixed $propertyValue;
 
-    /**
-     * @var ValueConversion
-     */
-    public $valueConversion;
+    /** @var array<string, mixed> */
+    public array $propertyQuery = [];
 
-    /**
-     * @var QueryConversion
-     */
-    public $queryConversion;
-
+    public mixed $nested = false; // Unknown type
+    public mixed $join = false; // Unknown type
+    public float $boost; // Currently unused
+    public ?ValueConversion $valueConversion = null;
+    public ?QueryConversion $queryConversion = null;
     public ?ChildOrderConversion $childOrderConversion = null;
 
-    /**
-     * @var self[]
-     */
-    public $conditions;
+    /** @var self[] */
+    public array $conditions;
 
     /**
-     * @var array
+     * @param self[]               $conditions
+     * @param array<string, mixed> $options
      */
-    public $options;
-
-    public function __construct(string $fieldName, string $property, FieldConfig $fieldConfig, array $conditions = [], array $options = [])
-    {
-        $this->fieldName = $fieldName;
-
+    public function __construct(
+        public string $fieldName,
+        string $property,
+        FieldConfig $fieldConfig,
+        array $conditions = [],
+        public array $options = [],
+    ) {
         $mapping = $this->parseProperty($property);
         $this->indexName = $mapping['indexName'];
         $this->typeName = $mapping['typeName'];
@@ -78,7 +71,6 @@ final class FieldMapping
         }
 
         $this->conditions = $this->expandConditions($conditions, $fieldConfig);
-        $this->options = $options;
     }
 
     /**
@@ -94,7 +86,9 @@ final class FieldMapping
      *      - <index>/<type>#<sub.nested[].property>
      *      - <index>/<type>#child><sub.nested[].property>.
      *
-     * @return string[]
+     * Returns: array{indexName: ?string, typeName: ?string, propertyName: string, nested: array{path: string}|bool, join: array{type: string}|bool}
+     *
+     * @return array<string, mixed>
      */
     private function parseProperty(string $property): array
     {

@@ -17,32 +17,13 @@ use Elastica\Query;
 use Psr\SimpleCache\CacheInterface as Cache;
 use Rollerworks\Component\Search\SearchCondition;
 
+/**
+ * @final
+ */
 class CachedConditionGenerator implements ConditionGenerator
 {
-    /**
-     * @var ConditionGenerator
-     */
-    private $conditionGenerator;
-
-    /**
-     * @var Cache
-     */
-    private $cacheDriver;
-
-    /**
-     * @var string
-     */
-    private $cacheKey;
-
-    /**
-     * @var \DateInterval|int|null
-     */
-    private $cacheTtl;
-
-    /**
-     * @var Query|null
-     */
-    private $query;
+    private ?string $cacheKey = null;
+    private ?Query $query = null;
 
     /**
      * @param ConditionGenerator     $conditionGenerator The actual ConditionGenerator to use when no cache exists
@@ -52,11 +33,11 @@ class CachedConditionGenerator implements ConditionGenerator
      *                                                   the driver supports TTL then the library may set a default value
      *                                                   for it or let the driver take care of that.
      */
-    public function __construct(ConditionGenerator $conditionGenerator, Cache $cacheDriver, $ttl = 0)
-    {
-        $this->conditionGenerator = $conditionGenerator;
-        $this->cacheDriver = $cacheDriver;
-        $this->cacheTtl = $ttl;
+    public function __construct(
+        private readonly ConditionGenerator $conditionGenerator,
+        private readonly Cache $cacheDriver,
+        private \DateInterval | int | null $ttl = 0,
+    ) {
     }
 
     public function registerField(string $fieldName, string $mapping, array $conditions = [], array $options = [])
@@ -75,7 +56,7 @@ class CachedConditionGenerator implements ConditionGenerator
                 $this->query = $this->cacheDriver->get($cacheKey);
             } else {
                 $this->query = $this->conditionGenerator->getQuery();
-                $this->cacheDriver->set($cacheKey, $this->query, $this->cacheTtl);
+                $this->cacheDriver->set($cacheKey, $this->query, $this->ttl);
             }
         }
 
@@ -89,7 +70,6 @@ class CachedConditionGenerator implements ConditionGenerator
 
     public function getSearchCondition(): SearchCondition
     {
-        /** @noinspection PhpInternalEntityUsedInspection */
         return $this->conditionGenerator->getSearchCondition();
     }
 

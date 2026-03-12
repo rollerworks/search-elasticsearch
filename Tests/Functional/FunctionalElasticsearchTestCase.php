@@ -98,7 +98,7 @@ abstract class FunctionalElasticsearchTestCase extends ElasticsearchTestCase
 
     protected function getDocuments(): array
     {
-        $date = static fn (string $input) => (new \DateTimeImmutable($input, new \DateTimeZone('UTC')))->format('Y-m-d\TH:i:sP');
+        $date = static fn (string $input): string => (new \DateTimeImmutable($input, new \DateTimeZone('UTC')))->format('Y-m-d\TH:i:sP');
 
         return [
             'customers' => [
@@ -303,7 +303,7 @@ abstract class FunctionalElasticsearchTestCase extends ElasticsearchTestCase
             $results = $search->search($query);
             $documents = $results->getDocuments();
             $foundIds = array_map(
-                static fn (Document $document) => (string) $document->getId(),
+                static fn (Document $document): string => (string) $document->getId(),
                 $documents
             );
         } catch (ResponseException $exception) {

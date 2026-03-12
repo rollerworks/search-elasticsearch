@@ -20,14 +20,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MoneyTypeExtension extends AbstractFieldTypeExtension
 {
-    /**
-     * @var CurrencyConversion
-     */
-    private $conversion;
-
-    public function __construct(CurrencyConversion $conversion)
-    {
-        $this->conversion = $conversion;
+    public function __construct(
+        private readonly CurrencyConversion $conversion = new CurrencyConversion(
+        ),
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void

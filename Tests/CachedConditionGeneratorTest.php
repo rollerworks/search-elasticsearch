@@ -31,20 +31,13 @@ use Rollerworks\Component\Search\Value\ValuesGroup;
  */
 final class CachedConditionGeneratorTest extends ElasticsearchTestCase
 {
-    /**
-     * @var CachedConditionGenerator
-     */
-    private $cachedConditionGenerator;
+    private CachedConditionGenerator $cachedConditionGenerator;
 
-    /**
-     * @var Cache&MockObject
-     */
-    private $cacheDriver;
+    /** @var Cache&MockObject */
+    private MockObject $cacheDriver;
 
-    /**
-     * @var ConditionGenerator&MockObject
-     */
-    private $conditionGenerator;
+    /** @var ConditionGenerator&MockObject */
+    private MockObject $conditionGenerator;
 
     /** @test */
     public function get_query_no_cache(): void

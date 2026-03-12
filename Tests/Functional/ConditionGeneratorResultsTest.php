@@ -17,8 +17,6 @@ use Rollerworks\Component\Search\Input\ProcessorConfig;
 use Rollerworks\Component\Search\Input\StringQueryInput;
 
 /**
- * Class ConditionGeneratorResultsTest.
- *
  * @group functional
  *
  * Special cases needed to be handled here
@@ -30,10 +28,7 @@ use Rollerworks\Component\Search\Input\StringQueryInput;
  */
 final class ConditionGeneratorResultsTest extends FunctionalElasticsearchTestCase
 {
-    /**
-     * @var StringQueryInput
-     */
-    private $inputProcessor;
+    private StringQueryInput $inputProcessor;
 
     protected function setUp(): void
     {

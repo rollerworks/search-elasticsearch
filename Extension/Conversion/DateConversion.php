@@ -17,16 +17,15 @@ use Rollerworks\Component\Search\Elasticsearch\QueryConditionGenerator as Genera
 use Rollerworks\Component\Search\Elasticsearch\QueryConversion;
 use Rollerworks\Component\Search\Elasticsearch\QueryPreparationHints;
 use Rollerworks\Component\Search\Elasticsearch\ValueConversion;
+use Rollerworks\Component\Search\Exception\TransformationFailedException;
+use Rollerworks\Component\Search\Extension\Core\DataTransformer\BaseDateTimeTransformer;
 use Rollerworks\Component\Search\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Rollerworks\Component\Search\Value\Compare;
 use Rollerworks\Component\Search\Value\Range;
 
 class DateConversion implements ValueConversion, QueryConversion
 {
-    /**
-     * @var DateTimeToStringTransformer
-     */
-    protected $transformer;
+    protected BaseDateTimeTransformer $transformer;
 
     public function __construct()
     {
@@ -34,7 +33,7 @@ class DateConversion implements ValueConversion, QueryConversion
     }
 
     /**
-     * @throws \Rollerworks\Component\Search\Exception\TransformationFailedException
+     * @throws TransformationFailedException
      */
     public function convertValue($value): string
     {

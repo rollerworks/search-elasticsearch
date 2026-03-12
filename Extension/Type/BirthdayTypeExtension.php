@@ -21,14 +21,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BirthdayTypeExtension extends AbstractFieldTypeExtension
 {
-    /**
-     * @var DateConversion
-     */
-    private $conversion;
-
-    public function __construct(DateConversion $conversion)
-    {
-        $this->conversion = $conversion;
+    public function __construct(
+        private readonly DateConversion $conversion,
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
