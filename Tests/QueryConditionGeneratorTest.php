@@ -37,7 +37,9 @@ use Rollerworks\Component\Search\Value\ValuesGroup;
  */
 final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
 {
-    /** @test */
+    /**
+     * @test
+     */
     public function it_throws_a_logic_exception_if_referencing_a_field_not_in_fieldset(): void
     {
         $this->expectException(UnknownFieldException::class);
@@ -57,7 +59,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         ], $generator->getQuery()->toArray());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_an_match_all_query_for_empty_condition(): void
     {
         $condition = $this->createCondition()->getSearchCondition();
@@ -74,7 +78,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping([], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_a_structure_of_root_level_fields(): void
     {
         $condition = $this->createCondition()
@@ -121,7 +127,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['id', 'name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_a_structure_with_or(): void
     {
         $condition = $this->createCondition()
@@ -201,7 +209,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['id', 'name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_a_structure_of_root_level_fields_with_excludes(): void
     {
         $condition = $this->createCondition()
@@ -240,7 +250,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['id'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_a_simple_structure_of_nested_fields(): void
     {
         $condition = $this->createCondition()
@@ -295,7 +307,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['id', 'name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_a_structure_with_excludes(): void
     {
         $condition = $this->createCondition()
@@ -348,7 +362,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['id'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_a_structure_with_comparisons(): void
     {
         $condition = $this->createCondition()
@@ -404,7 +420,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['id'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_a_structure_with__pattern_matchers(): void
     {
         $condition = $this->createCondition()
@@ -487,7 +505,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_generates_a_structure_with_nested_queries(): void
     {
         $condition = $this->createCondition()
@@ -534,7 +554,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_applies_the_primary_condition_without_a_query(): void
     {
         $primaryCondition = new SearchPrimaryCondition(
@@ -579,7 +601,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['restrict'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_applies_the_primary_condition_with_a_query(): void
     {
         $primaryCondition = new SearchPrimaryCondition(
@@ -649,7 +673,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['restrict', 'name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_looks_up_by_child_document(): void
     {
         $condition = $this
@@ -697,7 +723,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_adds_contextual_params(): void
     {
         $condition = $this
@@ -741,7 +769,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_adds_contextual_params_to_primary_query(): void
     {
         $primaryCondition = new SearchPrimaryCondition(
@@ -815,7 +845,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['name', 'restrict'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_adds_contextual_conditions_for_has_child_query(): void
     {
         $condition = $this
@@ -899,7 +931,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_adds_sort(): void
     {
         $condition = $this
@@ -929,7 +963,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['@date'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_adds_sort_from_primary_condition(): void
     {
         $primaryCondition = new SearchPrimaryCondition(
@@ -969,7 +1005,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['@date', '@id'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_adds_sort_for_has_child_query(): void
     {
         $condition = $this
@@ -1010,7 +1048,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['@date'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_merges_has_child_queries_from_conditional_order_queries(): void
     {
         $condition = $this
@@ -1066,7 +1106,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['@date'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_adds_additional_options_for_nested_queries(): void
     {
         $condition = $this->createCondition()
@@ -1108,7 +1150,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['name'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_merges_single_level_nested_queries(): void
     {
         $condition = $this->createCondition()
@@ -1166,7 +1210,9 @@ final class QueryConditionGeneratorTest extends SearchIntegrationTestCase
         self::assertMapping(['name', 'restrict'], $generator->getMappings());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_merges_multiple_level_nested_queries(): void
     {
         self::markTestIncomplete(

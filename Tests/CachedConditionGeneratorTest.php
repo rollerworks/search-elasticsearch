@@ -39,7 +39,9 @@ final class CachedConditionGeneratorTest extends ElasticsearchTestCase
     /** @var ConditionGenerator&MockObject */
     private MockObject $conditionGenerator;
 
-    /** @test */
+    /**
+     * @test
+     */
     public function get_query_no_cache(): void
     {
         $cacheKey = '';
@@ -85,7 +87,9 @@ final class CachedConditionGeneratorTest extends ElasticsearchTestCase
         self::assertEquals($query, $this->cachedConditionGenerator->getQuery());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function get_query_with_cache(): void
     {
         $cacheKey = '';

@@ -30,7 +30,9 @@ final class ElasticsearchFactoryTest extends ElasticsearchTestCase
 {
     protected ElasticsearchFactory $factory;
 
-    /** @test */
+    /**
+     * @test
+     */
     public function create_condition_generator(): void
     {
         $searchCondition = new SearchCondition(new GenericFieldSet([], 'invoice'), new ValuesGroup());
@@ -39,7 +41,9 @@ final class ElasticsearchFactoryTest extends ElasticsearchTestCase
         self::assertSame($searchCondition, $conditionGenerator->getSearchCondition());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function create_cache_condition_generator(): void
     {
         $searchCondition = new SearchCondition(new GenericFieldSet([], 'invoice'), new ValuesGroup());

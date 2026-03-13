@@ -16,7 +16,9 @@ namespace Rollerworks\Component\Search\Elasticsearch;
 use Rollerworks\Component\Search\Field\FieldConfig;
 use Rollerworks\Component\Search\Field\OrderField;
 
-/** @internal */
+/**
+ * @internal
+ */
 final class FieldMapping
 {
     public ?string $indexName;
