@@ -345,7 +345,7 @@ use Rollerworks\Component\Search\Value\ValuesGroup;
         $hints = new QueryPreparationHints();
         $hints->context = QueryPreparationHints::CONTEXT_ORDER;
 
-        foreach ($order->getFields() as $fieldName => $direction) {
+        foreach ($order->getSorting() as $fieldName => $direction) {
             $mapping = $this->mappings[$fieldName];
 
             // apply conditions from order fields
