@@ -3,13 +3,12 @@ RollerworksSearch Elasticsearch extension
 
 This package provides the Elasticsearch extension for [RollerworksSearch][1].
 
-**Note:** 
-
+> [!NOTE]
 > This extension is only about generating a search Query for Elasticsearch,
-  you need to set-up indexing and storage yourself.
+> you need to set-up indexing and storage yourself.
 
-If you'd like to contribute to this project, please see the [contributing guide lines][2]
-for more information.
+If you'd like to contribute to this project, please go the
+main [RollerworksSearch][1] repository and read the [Contributing][2] section.
 
 Installation
 ------------
